@@ -9,6 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(dplyr)
 library(infer)
+library(gt)
 
 ```
 
@@ -29,11 +30,16 @@ train_data <- read_csv(
 )
 
 train_data %>%
-  mutate(treatment = factor(treatment)) %>%
-  specify(attitude ~ treatment) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 1000, type = "permute") %>%
-  calculate(stat = "diff in medians", order = c("1", "0")) 
+  mutate(attitude_citizen = ifelse(citizen == TRUE, attitude, "?" )) %>%
+  mutate(attitude_noncitizen = ifelse(citizen == FALSE, attitude, "?" )) %>%
+  select(-attitude)
+  # mutate(treatment = factor(treatment)) %>%
+  # specify(attitude ~ treatment) %>%
+  # hypothesize(null = "independence") %>%
+  # generate(reps = 1000, type = "permute") %>%
+  # calculate(stat = "diff in medians", order = c("1", "0")) %>%
+  # gt()
+
 
 ```
 
