@@ -17,6 +17,23 @@ library(infer)
 # This is a comment
 
 
-train_data <- read_csv("train.csv")
+train_data <- read_csv(
+  "train.csv",
+  col_types = cols(
+    obs = col_double(),
+    citizen = col_logical(),
+    age = col_double(),
+    treatment = col_double(),
+    attitude = col_double()
+  )
+)
+
+train_data %>%
+  mutate(treatment = factor(treatment)) %>%
+  specify(attitude ~ treatment) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in medians", order = c("1", "0")) 
+
 ```
 
