@@ -4,16 +4,19 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(dplyr)
+library(infer)
 
-read_csv("train.csv")
 ```
 
 ```{r}
 
 # This is a comment
 
+
+train_data <- read_csv("train.csv")
 ```
 
